@@ -5,102 +5,6 @@ import React, { useState, useEffect } from 'react';
 import Card from '../Card/Card'; 
 import { CardProps } from '../types'; 
 import styles from './Board.module.css'; 
-import ethers from 'ethers';
-
-const abi = [
-    {
-      "inputs": [
-        {
-          "components": [
-            {
-              "internalType": "uint8",
-              "name": "up",
-              "type": "uint8"
-            },
-            {
-              "internalType": "uint8",
-              "name": "down",
-              "type": "uint8"
-            },
-            {
-              "internalType": "uint8",
-              "name": "left",
-              "type": "uint8"
-            },
-            {
-              "internalType": "uint8",
-              "name": "right",
-              "type": "uint8"
-            }
-          ],
-          "internalType": "struct BattleProcessor.Card",
-          "name": "active",
-          "type": "tuple"
-        },
-        {
-          "components": [
-            {
-              "internalType": "uint8",
-              "name": "up",
-              "type": "uint8"
-            },
-            {
-              "internalType": "uint8",
-              "name": "down",
-              "type": "uint8"
-            },
-            {
-              "internalType": "uint8",
-              "name": "left",
-              "type": "uint8"
-            },
-            {
-              "internalType": "uint8",
-              "name": "right",
-              "type": "uint8"
-            }
-          ],
-          "internalType": "struct BattleProcessor.Card",
-          "name": "target",
-          "type": "tuple"
-        }
-      ],
-      "name": "processBattle",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-]
-  
-const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
-
-let signer = null;
-
-let provider;
-if (window.ethereum == null) {
-
-    // If MetaMask is not installed, we use the default provider,
-    // which is backed by a variety of third-party services (such
-    // as INFURA). They do not have private keys installed,
-    // so they only have read-only access
-    console.log("MetaMask not installed; using read-only defaults")
-    provider = ethers.getDefaultProvider()
-
-} else {
-
-    // Connect to the MetaMask EIP-1193 object. This is a standard
-    // protocol that allows Ethers access to make all read-only
-    // requests through MetaMask.
-    provider = new ethers.BrowserProvider(window.ethereum)
-
-    // It also provides an opportunity to request access to write
-    // operations, which will be performed by the private key
-    // that MetaMask manages for the user.
-    signer = await provider.getSigner();
-}
-
-const contract = new ethers.Contract(contractAddress, abi, signer);
-
 
 // Helper function to generate a random number between 0 and 9
 const getRandomValue = (): string => {
@@ -169,18 +73,18 @@ const Board: React.FC = () => {
     const cardDown = down?.up
     const cardLeft = !leftColumn.includes(index) && left?.right
 
-    if (cardUP) {
-      contract.processBattle(selectedCard, up)
-    }
-    if (cardRight) {
-      contract.processBattle(selectedCard, right)
-    }
-    if (cardDown) {
-      contract.processBattle(selectedCard, down)
-    }
-    if (cardLeft) {
-      contract.processBattle(selectedCard, left)
-    }
+    // if (cardUP) {
+    //   contract.processBattle(selectedCard, up)
+    // }
+    // if (cardRight) {
+    //   contract.processBattle(selectedCard, right)
+    // }
+    // if (cardDown) {
+    //   contract.processBattle(selectedCard, down)
+    // }
+    // if (cardLeft) {
+    //   contract.processBattle(selectedCard, left)
+    // }
   }
 
   return (
