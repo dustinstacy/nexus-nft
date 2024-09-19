@@ -1,0 +1,28 @@
+/* styles/CardBoard.module.css */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px; /* Space between cells */
+  width: 330px; /* Adjust to fit 3 cells with gaps */
+  height: 330px; /* Adjust to fit 3 cells with gaps */
+  margin: 0 auto; /* Center the board horizontally */
+}
+
+.boardCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc; /* Border around each cell */
+  background-color: #e0e0e0; /* Background color for cells */
+  width: 100%;
+  height: 100%;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Space between cards */
+  justify-content: center; /* Center the cards horizontally */
+  margin-bottom: 20px; /* Space below the card container */
+}

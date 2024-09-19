@@ -1,0 +1,102 @@
+/* styles/Card.module.css */
+.card {
+  position: relative;
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Light gray background */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+}
+
+.side {
+  position: absolute;
+  font-size: 18px; /* Adjust font size as needed */
+  font-weight: bold;
+}
+
+.up {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5px; /* Adjust margin as needed */
+}
+
+.right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 5px; /* Adjust margin as needed */
+}
+
+.down {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px; /* Adjust margin as needed */
+}
+
+.left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 5px; /* Adjust margin as needed */
+}
+/* styles/Card.module.css */
+.card {
+  position: relative;
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff; /* White background */
+  color: #000000; /* Black text color */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 24px; /* Text size for numbers */
+  font-weight: bold;
+}
+
+.side {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.up {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5px; /* Adjust margin as needed */
+}
+
+.right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 5px; /* Adjust margin as needed */
+}
+
+.down {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px; /* Adjust margin as needed */
+}
+
+.left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 5px; /* Adjust margin as needed */
+}
+
+.center {
+  font-size: 24px; /* Adjust font size for center content */
+}
