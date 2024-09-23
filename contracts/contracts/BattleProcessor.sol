@@ -19,15 +19,15 @@ contract BattleProcessor {
         uint8 right;
     }
 
-    // function evaluate(uint8 activeValue, uint8 targetValue) internal pure returns (uint8) {
-    //     if (activeValue > targetValue) {
-    //         return 1;
-    //     } else if (activeValue <= targetValue) {
-    //         return 2;
-    //     }
-    // }
+    function evaluate(uint8 activeValue, uint8 targetValue) internal pure returns (uint8) {
+        if (activeValue > targetValue) {
+            return 1;
+        } else if (activeValue <= targetValue) {
+            return 2;
+        }
+    }
 
-    function processBattle() public pure returns (uint8) {
-        return 18;
+    function processBattle(uint8 activeValue, uint8 targetValue) public pure returns (uint8) {
+        return evaluate(activeValue, targetValue);
     }
 }

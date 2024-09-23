@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
 import './globals.css';
-import Provider from '@/context/Provider';
+import { WalletProvider } from '../context/WalletProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Provider>{children}</Provider>
+        <WalletProvider>{children}</WalletProvider>
       </body>
     </html>
   );

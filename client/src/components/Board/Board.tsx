@@ -2,27 +2,43 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useReadContract } from 'wagmi';
+import { ethers } from 'ethers';
 
 import Card from '../Card/Card';
 import styles from './Board.module.css';
-
-import { CardProps } from '../../../global.d';
 
 import { abi, contractAddress } from './constants';
 import { generateRandomCard } from '../../utils/Randomizers';
 
 const Board: React.FC = () => {
-  // State to hold the cards
+  const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [cards, setCards] = useState<CardProps[]>([]);
-  // State to hold the currently selected card
   const [selectedCard, setSelectedCard] = useState<CardProps | null>(null);
-  // State to hold the currently selected card
-  const [targetCard, setTargetCard] = useState<CardProps | null>(null);
-
-  const [direction, setDirection] = useState<string>('');
-  // State to hold the board cells
   const [board, setBoard] = useState<(CardProps | null)[]>(Array(9).fill(null));
+  const [cardPlaced, setCardPlaced] = useState(false);
+
+  useEffect(() => {
+    const initContract = async () => {
+      if (typeof window !== 'undefined' && window.ethereum) {
+        try {
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await provider.getSigner(); // Optional: Use signer if needed
+          const contractInstance = new ethers.Contract(
+            contractAddress,
+            abi,
+            signer
+          );
+          setContract(contractInstance);
+        } catch (error) {
+          console.error('Error initializing contract:', error);
+        }
+      } else {
+        console.error('Ethereum provider not found. Please install MetaMask.');
+      }
+    };
+
+    initContract();
+  }, []);
 
   // Generate cards on client side only
   useEffect(() => {
@@ -35,15 +51,8 @@ const Board: React.FC = () => {
   // Handle card selection
   const handleCardClick = (card: CardProps) => {
     setSelectedCard(card);
+    setCardPlaced(false);
   };
-
-  const result = useReadContract({
-    abi,
-    address: contractAddress as `0x${string}`,
-    functionName: 'processBattle',
-  });
-
-  console.log(result.data);
 
   // Handle board cell click
   const handleCellClick = (index: number, selectedCard: CardProps | null) => {
@@ -61,10 +70,14 @@ const Board: React.FC = () => {
       setBoard(newBoard);
       setCards(newCards);
       setSelectedCard(null);
+      setCardPlaced(true);
     }
   };
 
-  const battleProcessor = (index: number, selectedCard: CardProps | null) => {
+  const battleProcessor = async (
+    index: number,
+    selectedCard: CardProps | null
+  ) => {
     const up = board[index - 3];
     const right = board[index + 1];
     const left = board[index - 1];
@@ -79,25 +92,22 @@ const Board: React.FC = () => {
     const cardDown = down?.up;
     const cardLeft = !leftColumn.includes(index) && left?.right;
 
+    let result = null;
+
     if (cardUP) {
-      console.log('up');
-      setTargetCard(up);
-      setDirection('up');
+      result = await contract?.processBattle(selectedCard?.up, cardUP);
     }
     if (cardRight) {
-      console.log('right');
-      setTargetCard(right);
-      setDirection('right');
+      result = await contract?.processBattle(selectedCard?.right, cardRight);
     }
     if (cardDown) {
-      setTargetCard(down);
-      setDirection('down');
+      result = await contract?.processBattle(selectedCard?.down, cardDown);
     }
     if (cardLeft) {
-      console.log('left');
-      setTargetCard(left);
-      setDirection('left');
+      result = await contract?.processBattle(selectedCard?.left, cardLeft);
     }
+
+    console.log('result', result);
   };
 
   return (
