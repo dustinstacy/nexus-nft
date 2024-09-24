@@ -3,119 +3,137 @@
 
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
+import { useWallet } from '../../context/WalletProvider';
 
 import Card from '../Card/Card';
 import styles from './Board.module.css';
 
-import { abi, contractAddress } from './constants';
-import { generateRandomCard } from '../../utils/Randomizers';
+import { processorABI, processorAddress } from '../../utils/constants';
+import { cardsABI, cardsAddress } from '../../utils/constants';
 
 const Board: React.FC = () => {
-  const [contract, setContract] = useState<ethers.Contract | null>(null);
-  const [cards, setCards] = useState<CardProps[]>([]);
-  const [selectedCard, setSelectedCard] = useState<CardProps | null>(null);
-  const [board, setBoard] = useState<(CardProps | null)[]>(Array(9).fill(null));
+  const { accounts, signer } = useWallet();
+  const [processor, setProcessor] = useState<ethers.Contract | null>(null);
+  const [minter, setMinter] = useState<ethers.Contract | null>(null);
+  const [cards, setCards] = useState<Card[]>([]);
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const [board, setBoard] = useState<(Card | null)[]>(Array(9).fill(null));
   const [cardPlaced, setCardPlaced] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const initContract = async () => {
-      if (typeof window !== 'undefined' && window.ethereum) {
+      if (signer) {
         try {
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          const signer = await provider.getSigner(); // Optional: Use signer if needed
-          const contractInstance = new ethers.Contract(
-            contractAddress,
-            abi,
+          const processorInstance = new ethers.Contract(
+            processorAddress,
+            processorABI,
             signer
           );
-          setContract(contractInstance);
+          const minterInstance = new ethers.Contract(
+            cardsAddress,
+            cardsABI,
+            signer
+          );
+
+          setProcessor(processorInstance);
+          setMinter(minterInstance);
+          await fetchUserCards(signer);
+          setLoading(false);
         } catch (error) {
-          console.error('Error initializing contract:', error);
+          console.error('Error initializing contracts:', error);
+          setLoading(false);
         }
-      } else {
-        console.error('Ethereum provider not found. Please install MetaMask.');
       }
     };
 
     initContract();
-  }, []);
+  }, [signer, accounts]);
 
-  // Generate cards on client side only
-  useEffect(() => {
-    const generatedCards = Array.from({ length: 10 }, (_, index) =>
-      generateRandomCard(index + 1)
+  const fetchUserCards = async (signer: ethers.Signer) => {
+    const cardIds: number[] = [];
+
+    // Loop through the card types to check balance
+    for (let id = 0; id < 10; id++) {
+      const balance = await minter?.balanceOf(accounts[0], id);
+      if (balance > 0) {
+        cardIds.push(id);
+      }
+    }
+
+    // Fetch the metadata for each card owned by the user
+    const userCardsData = await Promise.all(
+      cardIds.map(async (id) => {
+        // Construct the IPFS URL for the card's metadata
+        const response = await fetch(
+          `https://ipfs.io/ipfs/QmZTaQEJbwhizr6wVw9T4jfeqPmDiT3nuXSLqeSbhiNkB6/${id}.json`
+        );
+        const cardData = await response.json();
+
+        return {
+          id,
+          name: cardData.name,
+          description: cardData.description,
+          rarity: cardData.rarity,
+          maxSupply: cardData.maxSupply,
+          image: cardData.image,
+          attributes: cardData.attributes.map((attr: Attribute) => ({
+            trait_type: attr.trait_type,
+            value: attr.value,
+          })),
+        };
+      })
     );
-    setCards(generatedCards);
-  }, []);
 
-  // Handle card selection
-  const handleCardClick = (card: CardProps) => {
+    setCards(userCardsData);
+  };
+
+  const handleCardClick = (card: Card) => {
     setSelectedCard(card);
     setCardPlaced(false);
   };
 
-  // Handle board cell click
-  const handleCellClick = (index: number, selectedCard: CardProps | null) => {
-    if (selectedCard && board[index] === null) {
-      // Place the selected card on the board
+  const handleCellClick = (index: number) => {
+    if (selectedCard && !board[index]) {
       const newBoard = [...board];
       newBoard[index] = selectedCard;
-
-      // Remove the selected card from the available cards
       const newCards = cards.filter((card) => card !== selectedCard);
-
-      battleProcessor(index, selectedCard);
-
-      // Update the states
       setBoard(newBoard);
       setCards(newCards);
       setSelectedCard(null);
-      setCardPlaced(true);
     }
   };
 
-  const battleProcessor = async (
-    index: number,
-    selectedCard: CardProps | null
-  ) => {
-    const up = board[index - 3];
-    const right = board[index + 1];
-    const left = board[index - 1];
-    const down = board[index + 3];
-    const leftColumn = [0, 3, 6];
-    const rightColumn = [2, 5, 8];
-
-    // Direction is relative from the active card's context
-    // e.g. cardUP means the target is above the active card
-    const cardUP = up?.down;
-    const cardRight = !rightColumn.includes(index) && right?.left;
-    const cardDown = down?.up;
-    const cardLeft = !leftColumn.includes(index) && left?.right;
-
-    let result = null;
-
-    if (cardUP) {
-      result = await contract?.processBattle(selectedCard?.up, cardUP);
-    }
-    if (cardRight) {
-      result = await contract?.processBattle(selectedCard?.right, cardRight);
-    }
-    if (cardDown) {
-      result = await contract?.processBattle(selectedCard?.down, cardDown);
-    }
-    if (cardLeft) {
-      result = await contract?.processBattle(selectedCard?.left, cardLeft);
+  const mintCard = async () => {
+    if (!minter) {
+      console.error('Minter contract is not initialized');
+      return;
     }
 
-    console.log('result', result);
+    const randomIndex = Math.floor(Math.random() * 10);
+
+    try {
+      await minter.mintCard(randomIndex);
+      console.log('Minted Card', randomIndex);
+    } catch (error) {
+      console.error('Error minting card:', error);
+    }
   };
 
   return (
     <div>
-      <h1>Card Board</h1>
+      <button className={styles.mintButton} onClick={mintCard}>
+        Mint a Card
+      </button>
       <div className={styles.cardContainer}>
         {cards.map((card, index) => (
-          <Card key={index} {...card} onClick={() => handleCardClick(card)} />
+          <div
+            key={index}
+            className={styles.cardWrapper}
+            onClick={() => handleCardClick(card)}
+          >
+            <Card {...card} />
+          </div>
         ))}
       </div>
       <div className={styles.board}>
@@ -123,7 +141,8 @@ const Board: React.FC = () => {
           <div
             key={index}
             className={styles.boardCell}
-            onClick={() => handleCellClick(index, selectedCard)}
+            onClick={() => handleCellClick(index)}
+            style={{ backgroundColor: cell ? '#d0ffd0' : '#e0e0e0' }} // Highlight if occupied
           >
             {cell ? <Card {...cell} /> : null}
           </div>

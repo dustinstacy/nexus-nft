@@ -1,0 +1,262 @@
+[
+  {
+    "id": 0,
+    "name": "Rico",
+    "description": "Catman with a heart of gold.",
+    "rarity": "common",
+    "maxSupply": 10000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/Qmf2W8DUaXgbXz48wE8qKUei2vsUAQ1zRGStmdSbVWbAPw",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 2
+      },
+      {
+        "trait_type": "right",
+        "value": 1
+      },
+      {
+        "trait_type": "down",
+        "value": 0
+      },
+      {
+        "trait_type": "left",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Elizabeth",
+    "description": "Fae creature with a mischievous spirit.",
+    "rarity": "common",
+    "maxSupply": 10000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmQT3PMU9ckBhShJ2ZtWcaRJd98zSKLahFNq2bgJqyqHXF",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 0
+      },
+      {
+        "trait_type": "right",
+        "value": 1
+      },
+      {
+        "trait_type": "down",
+        "value": 3
+      },
+      {
+        "trait_type": "left",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Xander",
+    "description": "Catman with a rebellious streak.",
+    "rarity": "common",
+    "maxSupply": 10000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmQ9EhciaK6qbTtHmMeSsvXE8ccwL86jXkSaebr8nyAHHU",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 2
+      },
+      {
+        "trait_type": "right",
+        "value": 1
+      },
+      {
+        "trait_type": "down",
+        "value": 1
+      },
+      {
+        "trait_type": "left",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Earthquake",
+    "description": "Flying pig that crashes alot.",
+    "rarity": "common",
+    "maxSupply": 10000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmSaR36z8fcxy8DBkQYuUZJgsRWD27wQHdY8JKtdbVgJ63",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 1
+      },
+      {
+        "trait_type": "right",
+        "value": 0
+      },
+      {
+        "trait_type": "down",
+        "value": 4
+      },
+      {
+        "trait_type": "left",
+        "value": 0
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Sephaira",
+    "description": "Catlady with a mysterious past.",
+    "rarity": "uncommon",
+    "maxSupply": 5000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmXUBWWBc6naH1VLgFtQFYEDkmCEJrQEPy1ezWWM4eQCWF",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 3
+      },
+      {
+        "trait_type": "right",
+        "value": 2
+      },
+      {
+        "trait_type": "down",
+        "value": 2
+      },
+      {
+        "trait_type": "left",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Chimera",
+    "description": "Dangerous beast with a split personality.",
+    "rarity": "uncommon",
+    "maxSupply": 5000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmePPUuf7ww1r3CTykcXto9o2XtYHtDhrJ7CAweF9JPDsW",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 1
+      },
+      {
+        "trait_type": "right",
+        "value": 4
+      },
+      {
+        "trait_type": "down",
+        "value": 1
+      },
+      {
+        "trait_type": "left",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Nork",
+    "description": "Goblin with a penchant for mischief.",
+    "rarity": "uncommon",
+    "maxSupply": 5000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmYyGWK7zLowB7tR3WE9do5KkiVYRaZd65oeCdSB7qZaL4",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 2
+      },
+      {
+        "trait_type": "right",
+        "value": 4
+      },
+      {
+        "trait_type": "down",
+        "value": 3
+      },
+      {
+        "trait_type": "left",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Brzzt",
+    "description": "Catdragon with a love for shiny objects.",
+    "rarity": "rare",
+    "maxSupply": 2000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmRw9r7GjsVYKczBU2ymbmZrwqxybXH2zLjVZ67S7iYPUL",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 5
+      },
+      {
+        "trait_type": "right",
+        "value": 5
+      },
+      {
+        "trait_type": "down",
+        "value": 2
+      },
+      {
+        "trait_type": "left",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Linus",
+    "description": "Ruler of the catpeople.",
+    "rarity": "rare",
+    "maxSupply": 2000,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmTV3pd2ksuskKpn1sk68MrVWFt2xVH66prWA2JRQ3qWoM",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 6
+      },
+      {
+        "trait_type": "right",
+        "value": 6
+      },
+      {
+        "trait_type": "down",
+        "value": 6
+      },
+      {
+        "trait_type": "left",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Odula",
+    "description": "Mysterious being with a dark past.",
+    "rarity": "epic",
+    "maxSupply": 100,
+    "image": "https://moccasin-electoral-cockroach-747.mypinata.cloud/ipfs/QmQoy52bwc4LQdLQXA8DmkRxkbarCi4CBwbX356w2h3p9x",
+    "attributes": [
+      {
+        "trait_type": "up",
+        "value": 9
+      },
+      {
+        "trait_type": "right",
+        "value": 0
+      },
+      {
+        "trait_type": "down",
+        "value": 9
+      },
+      {
+        "trait_type": "left",
+        "value": 9
+      }
+    ]
+  }
+]
