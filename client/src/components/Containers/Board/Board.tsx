@@ -3,13 +3,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { useWallet } from '../../context/WalletProvider';
+import { useWallet } from '../../../context/WalletProvider';
 
 import Card from '../Card/Card';
 import styles from './Board.module.css';
 
-import { processorABI, processorAddress } from '../../utils/constants';
-import { cardsABI, cardsAddress } from '../../utils/constants';
+import { processorABI, processorAddress } from '../../../utils/constants';
+import { cardsABI, cardsAddress } from '../../../utils/constants';
 
 const Board: React.FC = () => {
   const { accounts, signer } = useWallet();

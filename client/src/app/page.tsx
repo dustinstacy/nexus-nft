@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Board from '../components/Board/Board';
+import React from 'react';
+import Menu from '../components/Screens/Menu/Menu';
 import { useWallet } from '../context/WalletProvider';
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         {isConnected ? (
           <>
-            <Board />
+            <Menu />
             <p>Total IGC: </p>
             {igcBalance && <p>{igcBalance}</p>}
             <p>

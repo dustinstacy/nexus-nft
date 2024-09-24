@@ -5,13 +5,27 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Cards is ERC1155, Ownable {
-    mapping(uint256 => uint256) public totalSupply; // Total minted count per card type
-    uint256 public cardCount; // Total number of card types
+    struct Card {
+        uint256 cardId;
+        string name;
+        string description;
+        string image;
+        uint256 rarity;
+        Attribute[] attributes;
+    }
 
-    constructor() ERC1155("ipfs://QmZTaQEJbwhizr6wVw9T4jfeqPmDiT3nuXSLqeSbhiNkB6/{id}.json") Ownable(msg.sender) {}
+    struct Attribute {
+        string traitType;
+        uint256 value;
+    }
+
+    mapping(uint256 cardId => uint256 totalSupply) public totalCardSupply;
+    mapping(uint256 cardId => Card) public cards;
+
+    constructor(string memory _baseURI, address _owner) ERC1155(_baseURI) Ownable(_owner) {}
 
     function mintCard(uint256 cardId) public {
-        totalSupply[cardId] += 1;
+        totalCardSupply[cardId] += 1;
         _mint(msg.sender, cardId, 1, "");
     }
 }

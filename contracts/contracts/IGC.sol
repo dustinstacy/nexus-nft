@@ -7,4 +7,8 @@ contract InGameCurrency is ERC20 {
     constructor(address dev, uint256 initialSupply) ERC20("InGameCurrency", "IGC") {
         _mint(dev, initialSupply);
     }
+
+    function mint(address to, uint256 amount) public {
+        _mint(to, amount);
+    }
 }
