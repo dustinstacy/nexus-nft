@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.20",
     "ethers": "^6.13.2",
     "next": "^14.2.13",
     "react": "^18",

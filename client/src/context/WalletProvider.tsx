@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { currencyABI, currencyAddress } from '../utils/constants';
+import { useRouter } from 'next/navigation';
 
 interface WalletContextType {
   isConnected: boolean;
@@ -18,6 +19,7 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const router = useRouter();
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [accounts, setAccounts] = useState<string[]>([]);
   const [igcBalance, setIGCBalance] = useState<string | null>(null);
@@ -25,42 +27,43 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
 
   useEffect(() => {
+    const handleAccountsChanged = (accounts: string[]) => {
+      if (accounts.length > 0) {
+        setIsConnected(true);
+        setAccounts(accounts);
+        provider?.getSigner().then(setSigner);
+        fetchIGCBalance(accounts[0]);
+      } else {
+        // If disconnected, navigate to the app page
+        setIsConnected(false);
+        setAccounts([]);
+        setIGCBalance(null);
+        router.push('/'); // Adjust the path to your app page
+      }
+    };
+
+    const checkConnection = async () => {
+      if (typeof window !== 'undefined' && window.ethereum) {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        setProvider(provider);
+        const accounts = await provider.send('eth_accounts', []);
+        if (accounts.length > 0) {
+          setIsConnected(true);
+          setAccounts(accounts);
+          const signer = await provider.getSigner();
+          setSigner(signer);
+          await fetchIGCBalance(accounts[0]);
+        }
+      }
+    };
+
     window.ethereum?.on('accountsChanged', handleAccountsChanged);
     checkConnection();
 
     return () => {
       window.ethereum?.removeListener('accountsChanged', handleAccountsChanged);
     };
-  }, []);
-
-  const checkConnection = async () => {
-    if (typeof window !== 'undefined' && window.ethereum) {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      setProvider(provider);
-      const accounts = await provider.send('eth_accounts', []);
-      if (accounts.length > 0) {
-        setIsConnected(true);
-        setAccounts(accounts);
-        const signer = await provider.getSigner();
-        setSigner(signer);
-        await fetchIGCBalance(accounts[0]);
-      }
-    }
-  };
-
-  const handleAccountsChanged = async (accounts: string[]) => {
-    if (accounts.length > 0) {
-      setIsConnected(true);
-      setAccounts(accounts);
-      const signer = await provider?.getSigner();
-      setSigner(signer as ethers.Signer);
-      await fetchIGCBalance(accounts[0]);
-    } else {
-      setIsConnected(false);
-      setAccounts([]);
-      setIGCBalance(null);
-    }
-  };
+  }, [router]); // Add router as a dependency
 
   const fetchIGCBalance = async (account: string) => {
     if (typeof window !== 'undefined' && window.ethereum) {
