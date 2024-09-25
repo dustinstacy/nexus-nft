@@ -2,20 +2,20 @@
 
 .PHONY: all test 
 
-deploy-processor:
+deploy-igc:
 	@echo "Deploying contracts..."
-	@npx hardhat ignition deploy ./ignition/modules/BattleProcessor.ts --network localhost
+	@npx hardhat ignition deploy ./ignition/modules/IGC.ts --network localhost
 
-deploy-currency:
+deploy-purchase-igc:
 	@echo "Deploying contracts..."
-	@npx hardhat ignition deploy ./ignition/modules/InGameCurrency.ts --network localhost
+	@npx hardhat ignition deploy ./ignition/modules/PurchaseIGC.ts --network localhost
 
-deploy-cards:
+deploy-pieces:
 	@echo "Deploying contracts..."
-	@npx hardhat ignition deploy ./ignition/modules/Cards.ts --network localhost
+	@npx hardhat ignition deploy ./ignition/modules/Pieces.ts --network localhost
 
 deploy-all:
 	@echo "Deploying contracts..."
-	@npx hardhat ignition deploy ./ignition/modules/BattleProcessor.ts --network localhost
 	@npx hardhat ignition deploy ./ignition/modules/InGameCurrency.ts --network localhost
-	@npx hardhat ignition deploy ./ignition/modules/Cards.ts --network localhost
+	@npx hardhat ignition deploy ./ignition/modules/PurchaseIGC.ts --network localhost
+	@npx hardhat ignition deploy ./ignition/modules/Pieces.ts --network localhost

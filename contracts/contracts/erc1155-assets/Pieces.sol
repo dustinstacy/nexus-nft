@@ -45,21 +45,4 @@ contract Pieces is ERC1155, Ownable {
         totalPieceSupply[pieceId] -= 1;
         _burn(msg.sender, pieceId, 1);
     }
-
-    /// @notice Add a new piece
-    /// @param maxSupply Maximum supply of the piece
-    /// @param image URI of the image for the piece
-    /// @param description Description of the piece
-    /// @param name Name of the piece
-    /// @param attributes Array of attributes for the piece
-    function addPiece(
-        uint256 maxSupply,
-        string memory image,
-        string memory description,
-        string memory name,
-        Attribute[] memory attributes
-    ) public {
-        pieces[nextPieceId] = Piece(nextPieceId, maxSupply, image, description, name, attributes);
-        nextPieceId += 1;
-    }
 }
