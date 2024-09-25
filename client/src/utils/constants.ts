@@ -1,13 +1,12 @@
-import currencyArtifact from '../../../contracts/artifacts/contracts/IGC.sol/InGameCurrency.json';
-import processorArtifact from '../../../contracts/artifacts/contracts/BattleProcessor.sol/BattleProcessor.json';
-import cardsArtifact from '../../../contracts/artifacts/contracts/Cards.sol/Cards.json';
+import igcArtifact from '../../../contracts/artifacts/contracts/erc20-currency/IGC.sol/InGameCurrency.json';
+import purchaseIGCArtifact from '../../../contracts/artifacts/contracts/interactions/PurchaseIGC.sol/PurchaseIGC.json';
+import piecesArtifact from '../../../contracts/artifacts/contracts/erc1155-assets/Pieces.sol/Pieces.json';
 import deploymentAddresses from '../../../contracts/ignition/deployments/chain-31337/deployed_addresses.json';
 
-export const currencyABI = currencyArtifact.abi;
-export const currencyAddress =
-  deploymentAddresses['CurrencyModule#InGameCurrency'];
-export const processorABI = processorArtifact.abi;
-export const processorAddress =
-  deploymentAddresses['ProcessorModule#BattleProcessor'];
-export const cardsABI = cardsArtifact.abi;
-export const cardsAddress = deploymentAddresses['CardsModule#Cards'];
+export const igcABI = igcArtifact.abi;
+export const igcAddress = deploymentAddresses['IGCModule#InGameCurrency'];
+export const purchaseIGCABI = purchaseIGCArtifact.abi;
+export const purchaseIGCAddress =
+  deploymentAddresses['PurchaseIGCModule#PurchaseIGC'];
+export const piecesABI = piecesArtifact.abi;
+export const piecesAddress = deploymentAddresses['PiecesModule#Pieces'];
