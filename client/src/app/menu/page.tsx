@@ -12,7 +12,7 @@ const Menu: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col flex-grow h-full items-center justify-center space-y-4">
       <Button2 onClick={() => handleNavigation('/exchange')}>Exchange</Button2>
       <Button2 onClick={() => handleNavigation('/market')}>Market</Button2>
       <Button2 onClick={() => handleNavigation('/inventory')}>

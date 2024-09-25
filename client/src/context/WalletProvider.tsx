@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { currencyABI, currencyAddress } from '../utils/constants';
+import { igcABI, igcAddress } from '../utils/constants';
 import { useRouter } from 'next/navigation';
 
 interface WalletContextType {
@@ -68,11 +68,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     if (typeof window !== 'undefined' && window.ethereum) {
       try {
         const provider = new ethers.BrowserProvider(window.ethereum);
-        const contract = new ethers.Contract(
-          currencyAddress,
-          currencyABI,
-          provider
-        );
+        const contract = new ethers.Contract(igcAddress, igcABI, provider);
         const balance = await contract.balanceOf(account);
         setIGCBalance((BigInt(balance) / BigInt(10 ** 18)).toString());
       } catch (error) {
