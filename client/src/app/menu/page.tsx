@@ -13,11 +13,11 @@ const Menu: React.FC = () => {
 
   return (
     <div className="flex flex-col space-y-4">
-      <Button2 onClick={() => handleNavigation('/game')}>Game</Button2>
+      <Button2 onClick={() => handleNavigation('/exchange')}>Exchange</Button2>
+      <Button2 onClick={() => handleNavigation('/market')}>Market</Button2>
       <Button2 onClick={() => handleNavigation('/inventory')}>
         Inventory
       </Button2>
-      <Button2 onClick={() => handleNavigation('/market')}>Market</Button2>
     </div>
   );
 };

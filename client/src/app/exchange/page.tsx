@@ -3,24 +3,23 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { useWallet } from '@/context/WalletProvider';
-import { piecesABI, piecesAddress } from '@/utils/constants';
+import { purchaseIGCABI, purchaseIGCAddress } from '@/utils/constants';
 
-const Market = () => {
+const Exchange = () => {
   const { accounts, signer } = useWallet();
-  const [piecesContract, setPiecesContract] = useState<ethers.Contract | null>(
-    null
-  );
+  const [purchaseIGCContract, setPurchaseIGCContract] =
+    useState<ethers.Contract | null>(null);
 
   useEffect(() => {
     const initContract = async () => {
       if (signer) {
         try {
-          const piecesContractInstance = new ethers.Contract(
-            piecesAddress,
-            piecesABI,
+          const purchaseIGCContractInstance = new ethers.Contract(
+            purchaseIGCAddress,
+            purchaseIGCABI,
             signer
           );
-          setPiecesContract(piecesContractInstance);
+          setPurchaseIGCContract(purchaseIGCContractInstance);
         } catch (error) {
           console.error('Error initializing contracts:', error);
         }
@@ -29,8 +28,7 @@ const Market = () => {
 
     initContract();
   }, [signer, accounts]);
-
-  return <div>Market</div>;
+  return <div>Exchange</div>;
 };
 
-export default Market;
+export default Exchange;
