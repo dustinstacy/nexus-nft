@@ -34,11 +34,10 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
         provider?.getSigner().then(setSigner);
         fetchIGCBalance(accounts[0]);
       } else {
-        // If disconnected, navigate to the app page
         setIsConnected(false);
         setAccounts([]);
         setIGCBalance(null);
-        router.push('/'); // Adjust the path to your app page
+        router.push('/');
       }
     };
 
@@ -63,7 +62,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => {
       window.ethereum?.removeListener('accountsChanged', handleAccountsChanged);
     };
-  }, [router]); // Add router as a dependency
+  }, [router]);
 
   const fetchIGCBalance = async (account: string) => {
     if (typeof window !== 'undefined' && window.ethereum) {

@@ -12,8 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isConnected) {
-      // Navigate to the menu page when the wallet is connected
-      router.push('/menu'); // Adjust the path based on your actual routing
+      router.push('/menu');
     }
   }, [isConnected, router]);
 
