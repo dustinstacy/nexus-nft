@@ -12,6 +12,7 @@ interface WalletContextType {
   igcBalance: string | null;
   provider: ethers.BrowserProvider | null;
   signer: ethers.Signer | null;
+  updateIGCBalance: () => Promise<void>;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
@@ -70,12 +71,18 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
         const provider = new ethers.BrowserProvider(window.ethereum);
         const contract = new ethers.Contract(igcAddress, igcABI, provider);
         const balance = await contract.balanceOf(account);
-        setIGCBalance((BigInt(balance) / BigInt(10 ** 18)).toString());
+        setIGCBalance(balance);
       } catch (error) {
         console.error('Error fetching IGC balance:', error);
       }
     } else {
       console.error('Ethereum provider is not available');
+    }
+  };
+
+  const updateIGCBalance = async () => {
+    if (accounts.length > 0) {
+      await fetchIGCBalance(accounts[0]);
     }
   };
 
@@ -106,6 +113,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
         igcBalance,
         provider,
         signer,
+        updateIGCBalance,
       }}
     >
       {children}
