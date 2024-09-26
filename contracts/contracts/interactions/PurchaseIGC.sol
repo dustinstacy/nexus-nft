@@ -4,6 +4,7 @@ pragma solidity ^0.8.26;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "../erc20-currency/IGC.sol";
+import {console} from "hardhat/console.sol";
 
 /// @title PurchaseIGC
 /// @author Dustin Stacy
@@ -28,13 +29,12 @@ contract PurchaseIGC is Ownable {
 
     /// @notice Purchase tokens
     /// @param amount Amount of tokens to purchase
-    function buyTokens(uint256 amount) public payable {
+    function buyTokens(address buyer, uint256 amount) public payable {
         require(amount > 0, "Must purchase at least one token");
-        require(msg.value == amount * tokenPrice, "Incorrect Ether sent");
 
-        igcToken.mint(msg.sender, amount);
+        igcToken.mint(buyer, amount);
 
-        emit TokensPurchased(msg.sender, amount, msg.value);
+        emit TokensPurchased(buyer, amount, msg.value);
     }
 
     /// @notice Allows the owner to withdraw Ether from the contract
